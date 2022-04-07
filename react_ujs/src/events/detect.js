@@ -3,6 +3,7 @@ var pjaxEvents = require("./pjax")
 var turbolinksEvents = require("./turbolinks")
 var turbolinksClassicDeprecatedEvents = require("./turbolinksClassicDeprecated")
 var turbolinksClassicEvents = require("./turbolinksClassic")
+var turboEvents = require("./turbo")
 
 // see what things are globally available
 // and setup event handlers to those things
@@ -14,6 +15,7 @@ module.exports = function(ujs) {
     }
     turbolinksEvents.teardown(ujs);
     turbolinksClassicDeprecatedEvents.teardown(ujs);
+    turboEvents.teardown(ujs);
     pjaxEvents.teardown(ujs);
     nativeEvents.teardown(ujs);
   }
@@ -45,6 +47,8 @@ module.exports = function(ujs) {
     } else {
       turbolinksClassicDeprecatedEvents.setup(ujs);
     }
+  } else if (typeof Turbo !== 'undefined') {
+    turboEvents.setup(ujs);
   } else if (typeof $ !== "undefined" && typeof $.pjax === 'function') {
     pjaxEvents.setup(ujs);
   } else {
